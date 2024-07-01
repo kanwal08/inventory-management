@@ -1,0 +1,33 @@
+<%= form_with model: product do |form| %>
+    <%= render "layouts/errors", obj: product %>
+    <div class="mb-3 row">
+        <%= form.label :name, class: "form-label" %>
+        <div class="col-sm-4">
+            <%= form.text_field :name, class: "form-control" %>
+        </div>
+    </div>
+    <div class="mb-3">
+        <%= form.label :sku, class: "form-label"%>
+        <div class="col-sm-4">
+            <%= form.text_field :sku, class:"form-control" %>
+        </div>
+    </div>
+    <div class="mb-3">
+        <%= form.label :price, class: "form-label" %>
+        <div class="col-sm-4">
+            <%= form.text_field :price, class: "form-control" %>
+        </div>
+    </div>
+    <div class="mb-3">
+        <%= form.label :stock_quantity, class: "form-label" %>
+        <div class="col-sm-4">
+            <%= form.text_field :stock_quantity, class: "form-control" %>
+        </div>
+    </div>  
+    <div> 
+        <%= form.submit class: "btn btn-primary"%>
+        <%= link_to "Back to Product Listing", root_path, class: "btn btn-secondary" %>
+    </div>
+    <br>
+    
+<% end %>

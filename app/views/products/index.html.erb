@@ -1,0 +1,31 @@
+<%= link_to "Add new Product" , new_product_path, class: "btn btn-primary" %>
+<table class="table table-light table-striped" style= "width: 100%; margin-top:20px;">
+  <tr>
+    <th>Product Name</th>
+    <th>SKU</th>
+    <th>Price</th>
+    <th>Stock Quantity</th>
+    <th>Action</th>
+  </tr>
+  <% @products.each do |product| %>
+    <tr>
+      <td><%= product.name%></td>
+      <td><%= product.sku%></td>
+      <td><%= product.price%></td>
+      <td><%= product.stock_quantity%></td>   
+      <td>
+      <%= link_to product_path(product), class: "btn btn-xs btn-info" do %>
+        <i class="fas fa-eye"></i>
+      <% end %>
+      <%= link_to edit_product_path(product), class: "btn btn-xs btn-warning" do %>
+        <i class="fas fa-pencil"></i>
+      <% end %>  
+      <%= link_to product_path(product), data: {turbo_method: :delete,
+                    turbo_confirm: "Are you sure?"}, class: "btn btn-xs btn-danger" do %>
+        <i class="fas fa-trash-alt"></i>
+      <% end %>   
+      </td>   
+    </tr>
+  <% end %>
+</table>
+<%= will_paginate @products %>

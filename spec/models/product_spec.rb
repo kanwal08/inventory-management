@@ -17,8 +17,38 @@ RSpec.describe Product, type: :model do
     expect(subject).to_not be_valid
   end
 
+  it "is not valid with a negative price" do
+    subject.price = -1
+    expect(subject).to_not be_valid
+  end
+
+  it "is not valid with a negative price" do
+    subject.price = -1
+    expect(subject).to_not be_valid
+  end
+
   it "is not valid without stock_quantity" do
     subject.stock_quantity = nil
+    expect(subject).to_not be_valid
+  end
+
+  it "is not valid with a negative stock quantity" do
+    subject.stock_quantity = -1
+    expect(subject).to_not be_valid
+  end
+
+  it "is not valid with a decimal stock quantity" do
+    subject.stock_quantity = 1.5
+    expect(subject).to_not be_valid
+  end
+
+  it "is valid with a stock quantity of 0" do
+    subject.stock_quantity = 0
+    expect(subject).to be_valid
+  end
+
+  it "is not valid without SKU" do
+    subject.sku = nil
     expect(subject).to_not be_valid
   end
 

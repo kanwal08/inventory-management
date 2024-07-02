@@ -33,6 +33,16 @@ RSpec.describe "Products", type: :request do
       post "/products", params: { product: valid_attributes }
       expect(response).to redirect_to(Product.last)
     end
+
+    let(:invalid_attributes) { { name: nil, sku: nil, price: nil, stock_quantity: nil } }
+
+    it "does not create a new product with invalid attributes" do
+      expect {
+        post "/products", params: { product: invalid_attributes }
+      }.to_not change(Product, :count)
+
+      expect(response).to have_http_status(422) # Unprocessable Entity
+    end
   end
 
   describe "PATCH /products/:id" do
@@ -43,6 +53,16 @@ RSpec.describe "Products", type: :request do
       product.reload
       expect(product.name).to eq(new_attributes[:name])
     end
+
+    let(:invalid_attributes) { { name: nil } }
+
+    it "does not update the requested product with invalid attributes" do
+      patch "/products/#{product.id}", params: { product: invalid_attributes }
+      product.reload
+      expect(product.name).to_not eq(invalid_attributes[:name])
+
+      expect(response).to have_http_status(422) # Unprocessable Entity
+    end
   end
 
   describe "DELETE /products/:id" do
@@ -51,6 +71,11 @@ RSpec.describe "Products", type: :request do
       expect {
         delete "/products/#{product_to_destroy.id}"
       }.to change(Product, :count).by(-1)
+    end
+
+    it "does not destroy product if id not found" do
+      expect { delete "/products/-1" }.to_not change(Product, :count)
+      expect(response).to have_http_status(404) # Not Found
     end
   end
 

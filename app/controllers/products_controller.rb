@@ -14,7 +14,7 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(product_params)
     if @product.save
-      redirect_to root_path, notice: "Product was created successfully"
+      redirect_to @product, notice: "Product was created successfully"
     else
       render :new, status: :unprocessable_entity
     end
@@ -34,7 +34,6 @@ class ProductsController < ApplicationController
 
   def destroy
     #TODO Check if the product is associated with any order
-    #May be we can add a validation in the model to check if the product is associated with any order
     @product.destroy
 
     redirect_to root_path, alert: "Deleted successfully."        
